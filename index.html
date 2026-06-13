@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charged Coconut — Indie Mobile Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0e;
+    --surface: #13131a;
+    --border: #222230;
+    --pink: #ff2d6b;
+    --yellow: #ffe24b;
+    --cyan: #00e5ff;
+    --white: #f0f0f8;
+    --muted: #6060a0;
+    --display: 'Bebas Neue', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Scanline overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,14,0.92);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 22px;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+
+  .nav-logo span { color: var(--pink); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Pixel grid background */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,46,107,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,46,107,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Glow blob */
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,46,107,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; max-width: 900px; }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--pink);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(72px, 14vw, 160px);
+    line-height: 0.88;
+    letter-spacing: 0.01em;
+    margin-bottom: 32px;
+  }
+
+  h1 .line-1 { color: var(--white); display: block; }
+  h1 .line-2 { color: var(--yellow); display: block; }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 440px;
+    margin-bottom: 48px;
+    line-height: 1.9;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--pink);
+    color: #fff;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    transition: transform 0.15s, background 0.15s;
+  }
+
+  .hero-cta:hover {
+    background: #ff5585;
+    transform: translateY(-2px);
+  }
+
+  .hero-cta svg { transition: transform 0.15s; }
+  .hero-cta:hover svg { transform: translateX(4px); }
+
+  /* Pixel decoration */
+  .pixel-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 64px;
+  }
+
+  .pixel {
+    width: 8px;
+    height: 8px;
+    background: var(--border);
+  }
+
+  .pixel.active { background: var(--pink); }
+  .pixel.yellow { background: var(--yellow); }
+  .pixel.cyan { background: var(--cyan); }
+
+  /* ── Games section ── */
+  .games {
+    padding: 100px 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .game-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    max-width: 900px;
+  }
+
+  .game-info {
+    padding: 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  .game-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    padding: 3px 8px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+
+  .game-title {
+    font-family: var(--display);
+    font-size: 56px;
+    line-height: 0.9;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .game-title span { color: var(--pink); }
+
+  .game-desc {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 32px;
+  }
+
+  .game-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .badge {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+  }
+
+  .play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    border: 1px solid var(--pink);
+    color: var(--pink);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 20px;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .play-btn:hover {
+    background: var(--pink);
+    color: #fff;
+  }
+
+  .game-visual {
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Pixel art car illustration using CSS */
+  .pixel-car {
+    display: grid;
+    grid-template-columns: repeat(10, 12px);
+    grid-template-rows: repeat(7, 12px);
+    gap: 2px;
+    image-rendering: pixelated;
+  }
+
+  .pc { width: 12px; height: 12px; }
+  .pc-r { background: var(--pink); }
+  .pc-d { background: #cc2255; }
+  .pc-w { background: #aaddff; }
+  .pc-b { background: #222; }
+  .pc-0 { background: transparent; }
+  .pc-y { background: var(--yellow); }
+
+  .road-lines {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--yellow) 0px,
+      var(--yellow) 16px,
+      transparent 16px,
+      transparent 32px
+    );
+    opacity: 0.3;
+  }
+
+  /* ── About ── */
+  .about {
+    padding: 100px 40px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 900px;
+  }
+
+  .about-title {
+    font-family: var(--display);
+    font-size: 52px;
+    line-height: 0.9;
+    margin-bottom: 24px;
+    letter-spacing: 0.02em;
+  }
+
+  .about-title span { color: var(--yellow); }
+
+  .about-body {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.9;
+  }
+
+  .about-body p + p { margin-top: 16px; }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    align-self: start;
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 28px;
+  }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 48px;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .stat-num span { color: var(--pink); }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Footer ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: var(--display);
+    font-size: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-logo span { color: var(--pink); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    width: 100%;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content { animation: fadeUp 0.6s ease both; }
+  .game-card    { animation: fadeUp 0.6s ease 0.1s both; }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .games { padding: 60px 20px; }
+    .game-card { grid-template-columns: 1fr; }
+    .game-info { border-right: none; border-bottom: 1px solid var(--border); }
+    .about { grid-template-columns: 1fr; padding: 60px 20px; gap: 40px; }
+    footer { padding: 32px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">CHARGED<span>COCONUT</span></div>
+  <ul class="nav-links">
+    <li><a href="#games">Games</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="privacy-policy.html">Privacy</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Indie Mobile Games from India</div>
+    <h1>
+      <span class="line-1">ARCADE</span>
+      <span class="line-2">GAMES.</span>
+    </h1>
+    <p class="hero-sub">
+      Small studio. Big ideas. We build tight, satisfying mobile games
+      with personality — fast to pick up, hard to put down.
+    </p>
+    <a href="#games" class="hero-cta">
+      See our games
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+      </svg>
+    </a>
+
+    <div class="pixel-row">
+      <div class="pixel active"></div>
+      <div class="pixel active"></div>
+      <div class="pixel yellow"></div>
+      <div class="pixel"></div>
+      <div class="pixel cyan"></div>
+      <div class="pixel"></div>
+      <div class="pixel active"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel yellow"></div>
+      <div class="pixel"></div>
+      <div class="pixel active"></div>
+      <div class="pixel cyan"></div>
+      <div class="pixel"></div>
+      <div class="pixel"></div>
+      <div class="pixel active"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Games -->
+<section class="games" id="games">
+  <div class="section-label">Games</div>
+
+  <div class="game-card">
+    <div class="game-info">
+      <div class="game-tag">Available on Android</div>
+      <div class="game-title">DUAL<span>DRIVE</span></div>
+      <p class="game-desc">
+        Control two cars at once. Tap left to switch the left car,
+        tap right to switch the right. Build your style meter with
+        clutch dodges and climb from D rank all the way to SSS.
+      </p>
+      <div class="game-badges">
+        <span class="badge">Arcade</span>
+        <span class="badge">Racing</span>
+        <span class="badge">Reflex</span>
+        <span class="badge">Voxel</span>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.chargedcoconut.dualdrive" class="play-btn" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+          <path d="M2 1l10 6-10 6V1z"/>
+        </svg>
+        Play on Google Play
+      </a>
+    </div>
+
+    <div class="game-visual">
+      <!-- CSS pixel art car -->
+      <div style="display:flex; flex-direction:column; gap:16px; align-items:center;">
+        <!-- Car 1 (red) -->
+        <div style="display:grid; grid-template-columns: repeat(8,10px); grid-template-rows: repeat(5,10px); gap:1px;">
+          <div style="background:transparent"></div><div style="background:transparent"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:transparent"></div><div style="background:transparent"></div>
+          <div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#aaddff"></div><div style="background:#aaddff"></div><div style="background:#aaddff"></div><div style="background:#aaddff"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div>
+          <div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div><div style="background:#ff2d6b"></div>
+          <div style="background:#cc2255"></div><div style="background:#cc2255"></div><div style="background:#cc2255"></div><div style="background:#cc2255"></div><div style="background:#cc2255"></div><div style="background:#cc2255"></div><div style="background:#cc2255"></div><div style="background:#cc2255"></div>
+          <div style="background:#222"></div><div style="background:transparent"></div><div style="background:#222"></div><div style="background:#222"></div><div style="background:#222"></div><div style="background:#222"></div><div style="background:transparent"></div><div style="background:#222"></div>
+        </div>
+        <!-- Car 2 (blue) -->
+        <div style="display:grid; grid-template-columns: repeat(8,10px); grid-template-rows: repeat(5,10px); gap:1px;">
+          <div style="background:transparent"></div><div style="background:transparent"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:transparent"></div><div style="background:transparent"></div>
+          <div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#aaddff"></div><div style="background:#aaddff"></div><div style="background:#aaddff"></div><div style="background:#aaddff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div>
+          <div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div><div style="background:#4488ff"></div>
+          <div style="background:#2255cc"></div><div style="background:#2255cc"></div><div style="background:#2255cc"></div><div style="background:#2255cc"></div><div style="background:#2255cc"></div><div style="background:#2255cc"></div><div style="background:#2255cc"></div><div style="background:#2255cc"></div>
+          <div style="background:#222"></div><div style="background:transparent"></div><div style="background:#222"></div><div style="background:#222"></div><div style="background:#222"></div><div style="background:#222"></div><div style="background:transparent"></div><div style="background:#222"></div>
+        </div>
+      </div>
+      <div class="road-lines"></div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div>
+    <div class="about-title">CHARGED<span>COCONUT</span></div>
+    <div class="about-body">
+      <p>Solo indie studio based in India, building mobile arcade games with tight mechanics and strong visual identity.</p>
+      <p>Every game starts with one question: does the core mechanic feel good in the first 10 seconds? If yes, we build around it.</p>
+      <p>Voxel art. Chiptune audio. Fast runs. That's the formula.</p>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-num">1<span>+</span></div>
+      <div class="stat-label">Games shipped</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--yellow)">SSS</div>
+      <div class="stat-label">Max style rank</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">2<span style="color:var(--cyan)"></span></div>
+      <div class="stat-label">Cars at once</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--pink)">∞</div>
+      <div class="stat-label">Replayability</div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">CHARGED<span>COCONUT</span></div>
+  <ul class="footer-links">
+    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+    <li><a href="app-ads.txt">app-ads.txt</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Charged Coconut. All rights reserved. Made in India.</div>
+</footer>
+
+</body>
+</html>
