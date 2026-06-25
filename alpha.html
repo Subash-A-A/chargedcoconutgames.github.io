@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dual Drive — Alpha Testing</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0e;
+    --surface: #13131a;
+    --border: #222230;
+    --pink: #ff2d6b;
+    --yellow: #ffe24b;
+    --cyan: #00e5ff;
+    --white: #f0f0f8;
+    --muted: #6060a0;
+    --display: 'Bebas Neue', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 14px;
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 540px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 48px 40px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--cyan);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--white); }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 1px;
+    background: var(--cyan);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: 64px;
+    line-height: 0.9;
+    margin-bottom: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  h1 span { color: var(--cyan); display: block; }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 28px;
+    margin-top: 16px;
+    border-left: 2px solid var(--border);
+    padding-left: 16px;
+  }
+
+  /* Alpha warning badge */
+  .alpha-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 228, 75, 0.1);
+    border: 1px solid rgba(255, 228, 75, 0.3);
+    color: var(--yellow);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    margin-bottom: 28px;
+  }
+
+  .alpha-badge::before { content: '⚠'; font-size: 12px; }
+
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .feature {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .feature::before {
+    content: '▸';
+    color: var(--cyan);
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 28px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+
+  input[type="email"] {
+    flex: 1;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-right: none;
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 14px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    min-width: 0;
+  }
+
+  input[type="email"]:focus { border-color: var(--cyan); }
+  input[type="email"]::placeholder { color: var(--muted); }
+
+  button[type="submit"] {
+    background: var(--cyan);
+    border: 1px solid var(--cyan);
+    color: var(--black);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  button[type="submit"]:hover { opacity: 0.85; }
+  button[type="submit"]:disabled {
+    background: var(--muted);
+    border-color: var(--muted);
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  .status {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    min-height: 20px;
+    transition: all 0.3s;
+  }
+
+  .status.success { color: #00e5a0; }
+  .status.error   { color: var(--pink); }
+  .status.loading { color: var(--muted); }
+
+  .footer-note {
+    margin-top: 24px;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .pixel-row {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 28px;
+  }
+
+  .pixel { width: 6px; height: 6px; background: var(--border); }
+  .pixel.c { background: var(--cyan); }
+  .pixel.y { background: var(--yellow); }
+  .pixel.p { background: var(--pink); }
+
+  .success-card { display: none; text-align: center; }
+  .success-card.visible { display: block; }
+  .form-section.hidden { display: none; }
+
+  .success-icon {
+    font-family: var(--display);
+    font-size: 80px;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .success-title {
+    font-family: var(--display);
+    font-size: 40px;
+    margin-bottom: 12px;
+  }
+
+  .success-sub {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.9;
+  }
+
+  .success-steps {
+    text-align: left;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .success-step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .step-num {
+    background: var(--cyan);
+    color: var(--black);
+    font-weight: 700;
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 32px 24px; }
+    h1 { font-size: 48px; }
+    .input-row { flex-direction: column; }
+    input[type="email"] { border-right: 1px solid var(--border); border-bottom: none; }
+    button[type="submit"] { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="scanlines"></div>
+
+<div class="card">
+  <a href="index.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M11 7H3M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+    </svg>
+    Back to Home
+  </a>
+
+  <div class="pixel-row">
+    <div class="pixel c"></div><div class="pixel c"></div>
+    <div class="pixel y"></div><div class="pixel"></div>
+    <div class="pixel c"></div><div class="pixel"></div>
+    <div class="pixel p"></div><div class="pixel"></div>
+    <div class="pixel c"></div><div class="pixel"></div>
+    <div class="pixel y"></div><div class="pixel c"></div>
+  </div>
+
+  <!-- Form section -->
+  <div class="form-section" id="formSection">
+    <div class="eyebrow">Alpha Testing</div>
+    <h1>DUAL<span>DRIVE</span></h1>
+
+    <p class="subtitle">
+      Get early access to Dual Drive before anyone else.
+      Alpha builds are rough around the edges — your feedback
+      directly shapes the game.
+    </p>
+
+    <div class="alpha-badge">
+      Early alpha — expect bugs and rough edges
+    </div>
+
+    <div class="features">
+      <div class="feature">Earliest possible access to the game</div>
+      <div class="feature">Direct line to the developer</div>
+      <div class="feature">Your feedback shapes core mechanics</div>
+      <div class="feature">Android only — Google Play install</div>
+      <div class="feature">Access instructions sent immediately</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <label class="form-label" for="email">Your Email Address</label>
+    <div class="input-row">
+      <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required/>
+      <button type="submit" id="submitBtn" onclick="handleSubmit()">GET ACCESS</button>
+    </div>
+    <div class="status" id="status"></div>
+
+    <p class="footer-note">
+      No spam. Just alpha builds and occasional updates.<br>
+      Use the same Google account on your Android device.
+    </p>
+  </div>
+
+  <!-- Success section -->
+  <div class="success-card" id="successCard">
+    <div class="success-icon">🏁</div>
+    <div class="success-title">CHECK YOUR INBOX!</div>
+    <p class="success-sub">Instructions have been sent to your email.</p>
+
+    <div class="success-steps">
+      <div class="success-step">
+        <div class="step-num">1</div>
+        <div>Check your email for the Google Group invite link and join the alpha testing group</div>
+      </div>
+      <div class="success-step">
+        <div class="step-num">2</div>
+        <div>Use the Play Store opt-in link from the pinned post inside the group</div>
+      </div>
+      <div class="success-step">
+        <div class="step-num">3</div>
+        <div>Install Dual Drive from the Play Store and start playing</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFKCEjMnY45HsdGXcYH7CkRg-LvZa59FX0AHpn0q5CfUB1ek7sH7lIXL8N4OW-EMCk/exec';
+
+  async function handleSubmit() {
+    const email = document.getElementById('email').value.trim();
+    const status = document.getElementById('status');
+    const btn = document.getElementById('submitBtn');
+
+    if (!email || !email.includes('@')) {
+      status.textContent = '▸ Enter a valid email address.';
+      status.className = 'status error';
+      return;
+    }
+
+    btn.disabled = true;
+    status.textContent = '▸ Submitting...';
+    status.className = 'status loading';
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, type: 'alpha' })
+      });
+
+      document.getElementById('formSection').classList.add('hidden');
+      document.getElementById('successCard').classList.add('visible');
+
+    } catch (err) {
+      status.textContent = '▸ Something went wrong. Try again.';
+      status.className = 'status error';
+      btn.disabled = false;
+    }
+  }
+
+  document.getElementById('email').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+</body>
+</html>

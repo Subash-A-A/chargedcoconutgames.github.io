@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dual Drive — Beta Testing</title>
+  <title>Dual Drive — Beta Waitlist</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
   <style>
@@ -359,7 +359,6 @@
   <div class="scanlines"></div>
 
   <div class="card">
-    <!-- Back link — add this as the first child inside <div class="card"> -->
     <a href="index.html" style="
     display: inline-flex;
     align-items: center;
@@ -395,18 +394,19 @@
 
     <!-- Form section -->
     <div class="form-section" id="formSection">
-      <div class="eyebrow">Closed Beta</div>
+      <div class="eyebrow">Coming Soon</div>
       <h1>DUAL<span>DRIVE</span></h1>
 
       <p class="subtitle">
-        Control two cars simultaneously in this arcade racer.
-        Join the closed beta and help shape the final game.
+        Control two cars simultaneously in this arcade mobile racer.
+        Beta is not open yet — drop your email and we'll let you
+        know the moment it is.
       </p>
 
       <div class="features">
-        <div class="feature">Early access to new builds</div>
+        <div class="feature">First to know when beta opens</div>
+        <div class="feature">Early access before public launch</div>
         <div class="feature">Direct line to the developer</div>
-        <div class="feature">Your feedback shapes the game</div>
         <div class="feature">Android only — Google Play install</div>
       </div>
 
@@ -415,30 +415,49 @@
       <label class="form-label" for="email">Your Email Address</label>
       <div class="input-row">
         <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required />
-        <button type="submit" id="submitBtn" onclick="handleSubmit()">JOIN BETA</button>
+        <button type="submit" id="submitBtn" onclick="handleSubmit()">NOTIFY ME</button>
       </div>
       <div class="status" id="status"></div>
 
       <p class="footer-note">
-        No spam. Just beta builds and occasional updates.<br>
+        No spam. One email when beta opens, that's it.<br>
         Unsubscribe anytime.
       </p>
     </div>
 
-    <!-- Success section -->
     <div class="success-card" id="successCard">
       <div class="success-icon">🏁</div>
-      <div class="success-title">YOU'RE IN!</div>
+      <div class="success-title">YOU'RE ON THE LIST!</div>
       <p class="success-sub">
-        Check your inbox for the Play Store beta invite.<br>
-        Welcome to the Dual Drive beta. 🏎️
+        We'll email you the moment beta opens.<br><br>
+        Want to play right now? Alpha testing is open —
+        it's rough around the edges but it's the real game.
       </p>
+      <a href="alpha.html" style="
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      background: transparent;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      text-decoration: none;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      transition: background 0.15s, color 0.15s;
+    " onmouseover="this.style.background='var(--cyan)';this.style.color='var(--black)'"
+        onmouseout="this.style.background='transparent';this.style.color='var(--cyan)'">
+        ▸ Join Alpha Instead
+      </a>
     </div>
   </div>
 
   <script>
-    // 👇 Replace this with your Google Apps Script Web App URL
-    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFKCEjMnY45HsdGXcYH7CkRg-LvZa59FX0AHpn0q5CfUB1ek7sH7lIXL8N4OW-EMCk/exec';
 
     async function handleSubmit() {
       const email = document.getElementById('email').value.trim();
@@ -460,7 +479,7 @@
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, type: 'beta' })
         });
 
         // no-cors means we can't read the response
