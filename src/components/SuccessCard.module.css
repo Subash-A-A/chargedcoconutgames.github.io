@@ -1,0 +1,86 @@
+.card {
+  text-align: center;
+}
+
+.icon {
+  font-size: 56px;
+  line-height: 1;
+  margin: 10px 0 8px;
+}
+
+.title {
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.sub {
+  color: var(--ink-soft);
+  font-weight: 700;
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+
+.steps {
+  text-align: left;
+  margin: 22px 0 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--diamond-a);
+  border: var(--outline) solid var(--ink);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 0 var(--surface-shadow);
+}
+
+.stepNum {
+  background: var(--paw-blue);
+  color: var(--surface);
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.stepText {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 22px;
+  font-family: "Baloo 2", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--paw-blue-dark);
+  background: color-mix(in srgb, var(--paw-blue) 16%, transparent);
+  border: var(--outline) solid var(--paw-blue-dark);
+  border-radius: 12px;
+  padding: 10px 18px;
+  text-decoration: none;
+}
+
+.cta:hover {
+  filter: brightness(1.05);
+}

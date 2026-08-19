@@ -1,0 +1,208 @@
+.wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 140px 40px 80px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 48px;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: var(--white);
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--pink);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 10vw, 96px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+.title span {
+  color: var(--yellow);
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+  max-width: 480px;
+  margin-bottom: 64px;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sectionLabel::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.gameList {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  margin-bottom: 64px;
+}
+
+.gameRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+  gap: 16px;
+}
+
+.gameRow:last-child {
+  border-bottom: none;
+}
+
+.gameRow:hover {
+  background: var(--surface);
+}
+
+.gameRowLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gameName {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  line-height: 1;
+}
+
+.gameName span {
+  color: var(--pink);
+}
+
+.gamePlatform {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.privacyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.privacyLink:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.studioNote {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--pink);
+  padding: 24px 28px;
+  background: var(--surface);
+}
+
+.studioNoteLabel {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 10px;
+}
+
+.studioNote p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.studioNote a {
+  color: var(--cyan);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.studioNote a:hover {
+  border-color: var(--cyan);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .wrapper {
+    padding: 120px 20px 60px;
+  }
+  .gameRow {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

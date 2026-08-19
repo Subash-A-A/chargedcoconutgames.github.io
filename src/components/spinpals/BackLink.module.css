@@ -1,0 +1,18 @@
+.wrap {
+  text-align: center;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+.link:hover {
+  color: var(--ink);
+}

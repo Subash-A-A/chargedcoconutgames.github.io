@@ -1,0 +1,19 @@
+.toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: var(--outline) solid var(--ink);
+  background: var(--surface);
+  box-shadow: 0 4px 0 var(--surface-shadow);
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+}
+
+.toggle:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--surface-shadow);
+}
