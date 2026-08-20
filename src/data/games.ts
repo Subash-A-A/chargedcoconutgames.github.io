@@ -38,11 +38,11 @@ export const games: Game[] = [
         accent: "pink",
         external: true,
       },
-      {
-        label: "Beta Waitlist",
-        href: "/dualdrive/beta",
-        accent: "yellow",
-      },
+      // {
+      //   label: "Beta Waitlist",
+      //   href: "/dualdrive/beta",
+      //   accent: "yellow",
+      // },
     ],
     privacyHref: "/dualdrive/privacy-policy",
   },
@@ -62,13 +62,13 @@ export const games: Game[] = [
         href: "/spinpals/alpha",
         accent: "cyan",
       },
+      // {
+      //   label: "Beta Waitlist",
+      //   href: "/spinpals/beta",
+      //   accent: "yellow",
+      // },
       {
-        label: "Beta Waitlist",
-        href: "/spinpals/beta",
-        accent: "yellow",
-      },
-      {
-        label: "Download",
+        label: "Play on Google Play",
         href: "https://play.google.com/store/apps/details?id=com.chargedcoconut.spinpals",
         accent: "pink",
         external: true,
