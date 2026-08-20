@@ -10,7 +10,7 @@ import SuccessCard from "@/components/SuccessCard";
 // TODO: replace with the Spin Pals Google Apps Script Web App URL
 // (create a copy of the script/sheet used for Dual Drive's alpha/beta signups
 // and point it at a Spin Pals tab, then paste the deployment URL below).
-const APPS_SCRIPT_URL = "PASTE_SPINPALS_APPS_SCRIPT_URL_HERE";
+const APPS_SCRIPT_URL = "AKfycbxY3fiH6P_9KmhaSdrfpCnC-DSZddItyO5DJjSClnkjXjVJDGqM2AzjguCodMdRiPUB";
 
 export default function SpinPalsAlphaPage() {
   const [submitted, setSubmitted] = useState(false);
