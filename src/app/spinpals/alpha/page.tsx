@@ -12,6 +12,7 @@ import SuccessCard from "@/components/SuccessCard";
 // and point it at a Spin Pals tab, then paste the deployment URL below).
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxY3fiH6P_9KmhaSdrfpCnC-DSZddItyO5DJjSClnkjXjVJDGqM2AzjguCodMdRiPUB/exec";
 
+
 export default function SpinPalsAlphaPage() {
   const [submitted, setSubmitted] = useState(false);
 
