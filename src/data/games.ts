@@ -57,11 +57,11 @@ export const games: Game[] = [
       "Spin Pals is a fun and easy-to-play puzzle game where your goal is to spin a 3x3 region and pair all the pets. Simple to learn. Satisfying to master. Jump into a fresh daily challenge every day and see how fast you can solve it.",
     badges: ["Puzzle", "Casual", "Daily Challenges"],
     links: [
-      {
-        label: "Alpha Access",
-        href: "/spinpals/alpha",
-        accent: "cyan",
-      },
+      // {
+      //   label: "Alpha Access",
+      //   href: "/spinpals/alpha",
+      //   accent: "cyan",
+      // },
       // {
       //   label: "Beta Waitlist",
       //   href: "/spinpals/beta",
