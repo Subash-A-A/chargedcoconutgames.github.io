@@ -1,9 +1,9 @@
 import styles from "./AboutSection.module.css";
 
 const STATS: { value: string; color?: string; label: string }[] = [
-  { value: "1+", label: "Games shipped" },
-  { value: "SSS", color: "var(--yellow)", label: "Max style rank" },
-  { value: "50+", label: "Total Downloads" },
+  { value: "2+", label: "Games shipped" },
+  { value: "1", color: "var(--yellow)", label: "Tiny Studio" },
+  { value: "150+", label: "Total Downloads" },
   { value: "∞", color: "var(--pink)", label: "Replayability" },
 ];
 
